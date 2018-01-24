@@ -69,6 +69,8 @@ dkms.conf
 graph.txt
 degree_seq.txt
 gen_degree_seq.txt
+coreper_degree_seq.txt
+coreper_matrix.txt
 
 
 # End of https://www.gitignore.io/api/c,git,visualstudiocode
