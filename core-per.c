@@ -3,6 +3,10 @@
 
 #include "graph.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STBIW_ASSERT(x)
+#include "stb_image_write.h"
+
 /* Stampa su un file fp una matrice rows x columns fatta di interi
  */
 void fprintIntMatrix(FILE* fp, int** matrix, int rows, int columns) {
@@ -89,6 +93,15 @@ int main() {
     fp = fopen(matrix_filename, "w");
     fprintIntMatrix(fp, adjMatrix, size, size);
     fclose(fp);
+
+    unsigned char img[size][size];
+    for(i=0;i<size;i++){
+        for(j=0;j<size;j++){
+            img[i][j] = (adjMatrix==0)?200:0;
+        }
+    }
+
+    stbi_write_jpg("matrix.jpg", size, size, 1, img, 70);
 
     return 0;
 
