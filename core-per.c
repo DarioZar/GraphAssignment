@@ -97,7 +97,7 @@ int main() {
     unsigned char img[size][size];
     for(i=0;i<size;i++){
         for(j=0;j<size;j++){
-            img[i][j] = (adjMatrix==0)?200:0;
+            img[i][j] = (adjMatrix[i][j]==0)?200:0;
         }
     }
 
