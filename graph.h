@@ -15,3 +15,4 @@ void addEdge(Graph* graph, int src, int dest);
 void printGraph(Graph* graph);
 void fprintGraph(FILE* fp, Graph* graph);
 int nodeDegree(Graph* graph, int vertex);
+int** toAdjMatrix(Graph* graph);

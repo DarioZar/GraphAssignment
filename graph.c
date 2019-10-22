@@ -38,6 +38,24 @@ int nodeDegree(Graph* graph, int vertex) {
     return deg;
 }
 
+int** toAdjMatrix(Graph* graph) {
+    int i;
+    int size = graph->vertices;
+    Node* temp;
+    int** adjMatrix = calloc(size, sizeof(int*));
+    for(i=0;i<size;i++) {
+        adjMatrix[i] = calloc(size, sizeof(int));
+    }
+    for(i=0;i<size;i++) {
+        temp = graph->adjLists[i];
+        while(temp) {
+            adjMatrix[i][temp->vertex]+=1;
+            temp = temp->next;
+        }
+    }
+    return adjMatrix;
+}
+
 void printGraph(Graph* graph) {
     int i;
     for(i=0; i<graph->vertices; i++) {

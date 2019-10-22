@@ -26,7 +26,7 @@ int main() {
     int link;
     double pjoincorecore, pjoinperper, pjoincoreper;
 
-    int **adjMatrix; // TODO: funzione che va da Graph* a adjMatrix
+    int **adjMatrix;
     FILE* fp;
     char* coreper_degree_filename = "coreper_degree_seq.txt";
     char* matrix_filename = "coreper_matrix.txt";
@@ -53,13 +53,6 @@ int main() {
         printf("core-periphery\t");
         scanf("%lf", &pjoincoreper);
     } while(pjoincoreper<0 || pjoincoreper>1);
-    
-
-    // inizializzo la matrice di adiacenza
-    adjMatrix = calloc(size, sizeof(int*));
-    for(i=0;i<size;i++) {
-        adjMatrix[i] = calloc(size, sizeof(int));
-    }
 
     Graph* graph = createGraph(size);
 
@@ -76,7 +69,6 @@ int main() {
             if(link) {
                 printf("Adding edge %d--%d\n", i, j);
                 addEdge(graph, i, j);
-                adjMatrix[i][j]++;
             }
         }
     }
@@ -89,6 +81,7 @@ int main() {
 	}
 	fclose(fp);
 
+    adjMatrix = toAdjMatrix(graph);
     printf("\nLa matrice di adiacenza viene stampata sul file %s\n", matrix_filename);
     fp = fopen(matrix_filename, "w");
     fprintIntMatrix(fp, adjMatrix, size, size);
