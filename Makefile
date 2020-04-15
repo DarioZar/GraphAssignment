@@ -9,6 +9,9 @@ conf: conf.c graph.c
 core-per: core-per.c graph.c
 	$(CC) -o $(BDIR)/core-per.exe core-per.c graph.c -I.
 
+test: test.c graph.c
+	$(CC) -o $(BDIR)/test.exe test.c graph.c -I.
+
 
 .PHONY: all clean
 
