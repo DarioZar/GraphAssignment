@@ -8,6 +8,12 @@ int main() {
     Graph* graph = createGraph(5);
     addEdge(graph, 1, 2);
     addEdge(graph, 3, 4);
+    addEdge_dir(graph, 1, 2);
+    addEdge_dir(graph, 1, 3);
+    addEdge_dir(graph, 4, 1);
+    removeEdge_dir(graph, 4, 1);
+    removeEdge_dir(graph, 2, 3);
+    removeEdge(graph, 3, 4);
 
     printf("Grafo creato\n");
     int** adjMatrix = toAdjMatrix(graph);
@@ -18,5 +24,8 @@ int main() {
         }
         printf("\n");
     }
+
+    printGraph(graph);
+
     return 0;
 }

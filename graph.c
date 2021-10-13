@@ -18,14 +18,40 @@ Graph* createGraph(int vertices) {
     return graph;
 }
 
-void addEdge(Graph* graph, int src, int dest) {
+void addEdge_dir(Graph* graph, int src, int dest) {
+    // Create [dest] node, then push node at the head of list[src]
     Node* newNode = createNode(dest);
     newNode->next = graph->adjLists[src];
     graph->adjLists[src] = newNode;
+}
 
-    newNode = createNode(src);
-    newNode->next = graph->adjLists[dest];
-    graph->adjLists[dest] = newNode;
+void removeEdge_dir(Graph* graph, int src, int dest) {
+    Node* temp = graph->adjLists[src];
+    Node* prev;
+
+    // if it's the head node, push list to the right
+    // else search dest node and delete it, connecting prev and next nodes
+    if(temp!=NULL && temp->vertex==dest) {
+        graph->adjLists[src] = temp->next;
+    }
+    else{
+        while(temp!=NULL && temp->vertex!=dest) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if(temp) prev->next = temp->next;
+    }
+    free(temp);
+}
+
+void addEdge(Graph* graph, int src, int dest) {
+    addEdge_dir(graph, src, dest);
+    addEdge_dir(graph, dest, src);
+}
+
+void removeEdge(Graph* graph, int src, int dest) {
+    removeEdge_dir(graph, src, dest);
+    removeEdge_dir(graph, dest, src);
 }
 
 int nodeDegree(Graph* graph, int vertex) {
@@ -56,19 +82,6 @@ int** toAdjMatrix(Graph* graph) {
     return adjMatrix;
 }
 
-void printGraph(Graph* graph) {
-    int i;
-    for(i=0; i<graph->vertices; i++) {
-        Node* temp = graph->adjLists[i];
-        printf("\nAdjacency list of vertex %d\n", i);
-        while(temp) {
-            printf("%d -> ", temp->vertex);
-            temp = temp->next;
-        }
-        printf("\n");
-    }
-}
-
 void fprintGraph(FILE* fp, Graph* graph) {
     int i;
     for(i=0; i<graph->vertices; i++) {
@@ -80,4 +93,8 @@ void fprintGraph(FILE* fp, Graph* graph) {
         }
         fprintf(fp, "\n");
     }
+}
+
+void printGraph(Graph* graph) {
+    fprintGraph(stdout, graph);
 }
